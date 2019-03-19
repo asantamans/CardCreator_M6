@@ -201,8 +201,10 @@ public class Editor {
 		btnNewButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				cargarCardList();
+				
+				controller.cargarCardList();
 				controller.setCartasCargadas(true);
+				cargarCardListInJList();
 			}
 		});
 
@@ -213,7 +215,7 @@ public class Editor {
 						"Introdueix el nom de la baralla a cercar", 1);
 				if (name != null) {
 
-					cargarCardList();
+					cargarCardListInJList();
 				}
 			}
 		});
@@ -277,8 +279,8 @@ public class Editor {
 		btnRandomDeck.setVisible(true);
 	}
 
-	private void cargarCardList() {
-		carregarCartes();
+	private void cargarCardListInJList() {
+		//carregarCartes();
 		cartesDLM.clear();
 		deckDLM.clear();
 		for (Carta a : cartesArray) {
