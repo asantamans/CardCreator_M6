@@ -6,9 +6,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import Logica.ControladorInterfaz;
+import Objectes.Carta;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -36,13 +39,13 @@ public class Editor {
 	private JButton toCartas;
 	private JButton toDeck;
 	private JLabel lblNomBaralla;
-	public static JList<String> cartasList;
-	public static JList<String> deckList;
+	public static JList<Carta> cartasList;
+	public static JList<Carta> deckList;
 	private JButton btnRandomDeck;
-	public static ArrayList<String> cartesArray;
-	public static ArrayList<String> deckArray;
-	private static DefaultListModel<String> cartesDLM;
-	private static DefaultListModel<String> deckDLM;
+	public static ArrayList<Carta> cartesArray;
+	public static ArrayList<Carta> deckArray;
+	private static DefaultListModel<Carta> cartesDLM;
+	private static DefaultListModel<Carta> deckDLM;
 	private JScrollPane cartesScroll;
 	private JScrollPane deckScroll;
 	private static ControladorInterfaz controller;
@@ -75,10 +78,10 @@ public class Editor {
 	 */
 	private void initialize() {
 		controller = new ControladorInterfaz();
-		cartesArray = new ArrayList<String>();
-		deckArray = new ArrayList<String>();
-		cartesDLM = new DefaultListModel<String>();
-		deckDLM = new DefaultListModel<String>();
+		cartesArray = new ArrayList<Carta>();
+		deckArray = new ArrayList<Carta>();
+		cartesDLM = new DefaultListModel<Carta>();
+		deckDLM = new DefaultListModel<Carta>();
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 480);
@@ -233,7 +236,8 @@ public class Editor {
 	private void carregarCartes() {
 		// Funcio hardcodejada temporalment
 		for (int i = 1; i < 17; ++i) {
-			cartesArray.add("Carta " + i);
+			Carta a = new Carta(i, "Carta "+i,i, i+2, i-2, 2);
+			cartesArray.add(a);
 		}
 	}
 
@@ -251,7 +255,7 @@ public class Editor {
 	private void cargarCardList() {
 		carregarCartes();
 
-		for (String a : cartesArray) {
+		for (Carta a : cartesArray) {
 			cartesDLM.addElement(a);
 		}
 		cartasList.setModel(cartesDLM);
