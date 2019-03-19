@@ -36,26 +36,26 @@ import javax.swing.UIManager;
 
 public class Editor {
 
-	//Variables Swing
+	// Variables Swing
 	private JFrame frame;
 	private JTextField textField;
 	private JScrollPane cartesScroll;
 	private JScrollPane deckScroll;
 	private JLabel lblNomBaralla;
-	
-	//Variables con listeners
+	private static JLabel valueLabel;
+
+	// Variables con listeners
 	public static JList<Carta> cartasList;
 	public static JList<Carta> deckList;
-	
+
 	private JButton btnRandomDeck;
 	private JButton toCartas;
 	private JButton toDeck;
-	
+
 	public static ArrayList<Carta> cartesArray;
 	public static ArrayList<Carta> deckArray;
 	public static DefaultListModel<Carta> cartesDLM;
-	public  static DefaultListModel<Carta> deckDLM;
-	
+	public static DefaultListModel<Carta> deckDLM;
 
 	private static ControladorInterfaz controller;
 
@@ -86,7 +86,7 @@ public class Editor {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		
+
 		controller = new ControladorInterfaz();
 		cartesArray = new ArrayList<Carta>();
 		deckArray = new ArrayList<Carta>();
@@ -104,15 +104,19 @@ public class Editor {
 
 		cartasList = new JList(cartesDLM);
 		cartasList.setLayoutOrientation(JList.VERTICAL);// Surt rara si no
-		cartasList.setBounds(54, 80, 206, 332);
+		// cartasList.setBounds(54, 80, 206, 332);
 		cartasList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-		panel.add(cartasList);
+		cartesScroll = new JScrollPane(cartasList);
+		cartesScroll.setBounds(54, 80, 206, 332);
+		panel.add(cartesScroll);
 
 		deckList = new JList(deckDLM);
 		deckList.setLayoutOrientation(JList.VERTICAL);
-		deckList.setBounds(533, 80, 206, 332);
 		deckList.setSelectionMode(DefaultListSelectionModel.SINGLE_SELECTION);
-		panel.add(deckList);
+		deckScroll = new JScrollPane(deckList);
+		// deckList.setBounds(533, 80, 206, 332);
+		deckScroll.setBounds(533, 80, 206, 332);
+		panel.add(deckScroll);
 
 		toCartas = new JButton("<---");
 		toCartas.setBackground(UIManager.getColor("CheckBox.light"));
@@ -183,6 +187,17 @@ public class Editor {
 		btnGuardarBaralla.setBounds(510, 22, 198, 34);
 		panel.add(btnGuardarBaralla);
 
+		valueLabel = new JLabel("Valor baralla:" + controller.getDeckValue());
+		valueLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		valueLabel.setBounds(537, 55, 153, 26);
+		valueLabel.setForeground(Color.green);
+		panel.add(valueLabel);
+
+		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel.setIcon(new ImageIcon(Editor.class.getResource("/Interfaz/editor_background.jpg")));
+		lblNewLabel.setBounds(0, 0, 784, 441);
+		panel.add(lblNewLabel);
+
 		// Action Listeners
 		btnRandomDeck.addActionListener(new ActionListener() {
 
@@ -201,7 +216,7 @@ public class Editor {
 		btnNewButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
-				
+
 				controller.cargarCardList();
 				controller.setCartasCargadas(true);
 				cargarCardListInJList();
@@ -225,9 +240,13 @@ public class Editor {
 				// TODO Auto-generated method stub
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
 					int point = cartasList.getSelectedIndex();
+
 					if (point >= 0) {
+						Carta tmp = cartasList.getModel().getElementAt(point);
+						controller.setDeckValue(controller.getDeckValue() + tmp.getValue());
 						deckDLM.addElement(cartasList.getSelectedValue());
 						cartesDLM.remove(cartasList.getSelectedIndex());
+						actualizarValorDeck();
 					}
 				}
 
@@ -241,8 +260,11 @@ public class Editor {
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
 					int point = deckList.getSelectedIndex();
 					if (point >= 0) {
+						Carta tmp = deckList.getModel().getElementAt(point);
+						controller.setDeckValue(controller.getDeckValue() - tmp.getValue());
 						cartesDLM.addElement(deckList.getSelectedValue());
 						deckDLM.remove(point);
+						actualizarValorDeck();
 					}
 
 				} else {
@@ -252,14 +274,10 @@ public class Editor {
 
 		});
 
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(Editor.class.getResource("/Interfaz/editor_background.jpg")));
-		lblNewLabel.setBounds(0, 0, 784, 441);
-		panel.add(lblNewLabel);
 	}
 
 	private void carregarCartes() {
-		// Funcio hardcodejada temporalment
+		// Funcio hardcodejada temporalment en cas de no tenir eXist
 		cartesArray.clear();
 		deckArray.clear();
 		for (int i = 1; i < 17; ++i) {
@@ -268,19 +286,28 @@ public class Editor {
 		}
 	}
 
-	// Deprecated
-	private void cargarInvisibles() {
-		cartasList.setVisible(true);
-		deckList.setVisible(true);
-		toDeck.setVisible(true);
-		toCartas.setVisible(true);
-		textField.setVisible(true);
-		lblNomBaralla.setVisible(true);
-		btnRandomDeck.setVisible(true);
+	
+	/*Deprecated
+	 * private void cargarInvisibles() { cartasList.setVisible(true);
+	 * deckList.setVisible(true); toDeck.setVisible(true);
+	 * toCartas.setVisible(true); textField.setVisible(true);
+	 * lblNomBaralla.setVisible(true); btnRandomDeck.setVisible(true); }
+	 */
+	public static void actualizarValorDeck() {
+		valueLabel.setText("Valor baralla:" + controller.getDeckValue());
+		if (controller.getDeckValue() > 20) {
+			valueLabel.setForeground(Color.red);
+		} else {
+			valueLabel.setForeground(Color.green);
+		}
+	}
+
+	public static void actualizarValorDeck(int newValor) {
+		valueLabel.setText("Valor baralla:" + newValor);
 	}
 
 	private void cargarCardListInJList() {
-		//carregarCartes();
+		// carregarCartes();
 		cartesDLM.clear();
 		deckDLM.clear();
 		for (Carta a : cartesArray) {
@@ -293,6 +320,4 @@ public class Editor {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, string, "Advertencia", 1);
 	}
-
-
 }

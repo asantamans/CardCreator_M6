@@ -9,6 +9,7 @@ public class ControladorInterfaz {
 	private boolean deckCargado;
 	private CartaExistImpl cartaExistDB;
 	private BarallaMongoImpl barallaMongoDB;
+	private int deckValue = 0;
 	
 	public ControladorInterfaz(){
 		cartasCargadas = false;
@@ -38,6 +39,15 @@ public class ControladorInterfaz {
 		Editor.cartesArray = cartaExistDB.getConexion().obtenirCartes();
 		
 	}
+
+	public int getDeckValue() {
+		return deckValue;
+	}
+
+	public void setDeckValue(int deckValue) {
+		this.deckValue = deckValue;
+	}
+	
 	
 	
 }

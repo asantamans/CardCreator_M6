@@ -46,7 +46,7 @@ public class Carta {
 
 	@Override
 	public String toString() {
-		return name;
+		return name+" A:"+attack+"/D:"+defense+"/S:"+summonCost+"/V:"+value;
 	}
 	
 	
