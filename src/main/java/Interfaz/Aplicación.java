@@ -48,7 +48,6 @@ public class Aplicación {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		inicializarImagen();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 800, 480);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -88,20 +87,13 @@ public class Aplicación {
 		});
 		panel.add(btnNewButton);
 		
-		JLabel iconLabel = new JLabel(new ImageIcon(image));
-		iconLabel.setForeground(Color.WHITE);
-		iconLabel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		JLabel iconLabel = new JLabel("");
+		iconLabel.setIcon(new ImageIcon(Editor.class.getResource("/Interfaz/start_background.jpg")));
 		iconLabel.setBounds(0, 0, 784, 441);
 		panel.add(iconLabel);
 	}
 
-	private void inicializarImagen() {
-		try {
-			image = ImageIO.read(new File("src/start_background.jpg"));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+
 	
 
 }

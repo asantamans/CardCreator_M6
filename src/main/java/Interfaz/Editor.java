@@ -17,6 +17,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 
 import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.ImageIcon;
@@ -24,6 +25,8 @@ import javax.swing.JButton;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JList;
@@ -33,21 +36,27 @@ import javax.swing.UIManager;
 
 public class Editor {
 
+	//Variables Swing
 	private JFrame frame;
-	private JList list;
 	private JTextField textField;
-	private JButton toCartas;
-	private JButton toDeck;
+	private JScrollPane cartesScroll;
+	private JScrollPane deckScroll;
 	private JLabel lblNomBaralla;
+	
+	//Variables con listeners
 	public static JList<Carta> cartasList;
 	public static JList<Carta> deckList;
+	
 	private JButton btnRandomDeck;
+	private JButton toCartas;
+	private JButton toDeck;
+	
 	public static ArrayList<Carta> cartesArray;
 	public static ArrayList<Carta> deckArray;
 	public static DefaultListModel<Carta> cartesDLM;
 	public  static DefaultListModel<Carta> deckDLM;
-	private JScrollPane cartesScroll;
-	private JScrollPane deckScroll;
+	
+
 	private static ControladorInterfaz controller;
 
 	/**
@@ -77,6 +86,7 @@ public class Editor {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
 		controller = new ControladorInterfaz();
 		cartesArray = new ArrayList<Carta>();
 		deckArray = new ArrayList<Carta>();
@@ -281,5 +291,6 @@ public class Editor {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, string, "Advertencia", 1);
 	}
+
 
 }
