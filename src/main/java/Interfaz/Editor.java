@@ -44,8 +44,8 @@ public class Editor {
 	private JButton btnRandomDeck;
 	public static ArrayList<Carta> cartesArray;
 	public static ArrayList<Carta> deckArray;
-	private static DefaultListModel<Carta> cartesDLM;
-	private static DefaultListModel<Carta> deckDLM;
+	public static DefaultListModel<Carta> cartesDLM;
+	public  static DefaultListModel<Carta> deckDLM;
 	private JScrollPane cartesScroll;
 	private JScrollPane deckScroll;
 	private static ControladorInterfaz controller;
@@ -174,6 +174,20 @@ public class Editor {
 		panel.add(btnGuardarBaralla);
 
 		// Action Listeners
+		btnRandomDeck.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
+					controller.randomDeck();
+				}
+
+				else {
+					showError("No has cargado ninguna baraja o cartas");
+				}
+			}
+		});
+
 		btnNewButton.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -200,8 +214,8 @@ public class Editor {
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
 					int point = cartasList.getSelectedIndex();
 					if (point >= 0) {
-					deckDLM.addElement(cartasList.getSelectedValue());
-					cartesDLM.remove(cartasList.getSelectedIndex());
+						deckDLM.addElement(cartasList.getSelectedValue());
+						cartesDLM.remove(cartasList.getSelectedIndex());
 					}
 				}
 
@@ -213,18 +227,17 @@ public class Editor {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
-				int point = deckList.getSelectedIndex();
-				if (point >= 0) {
-					cartesDLM.addElement(deckList.getSelectedValue());
-					deckDLM.remove(point);
+					int point = deckList.getSelectedIndex();
+					if (point >= 0) {
+						cartesDLM.addElement(deckList.getSelectedValue());
+						deckDLM.remove(point);
+					}
+
+				} else {
+					showError("No has cargado ninguna baraja o cartas");
 				}
-				
-			}else {
-				showError("No has cargado ninguna baraja o cartas");
-			}
 			}
 
-			
 		});
 
 		JLabel lblNewLabel = new JLabel("New label");
@@ -235,8 +248,10 @@ public class Editor {
 
 	private void carregarCartes() {
 		// Funcio hardcodejada temporalment
+		cartesArray.clear();
+		deckArray.clear();
 		for (int i = 1; i < 17; ++i) {
-			Carta a = new Carta(i, "Carta "+i,i, i+2, i-2, 2);
+			Carta a = new Carta(i, "Carta " + i, i, i + 2, i - 2, 2);
 			cartesArray.add(a);
 		}
 	}
@@ -254,15 +269,17 @@ public class Editor {
 
 	private void cargarCardList() {
 		carregarCartes();
-
+		cartesDLM.clear();
+		deckDLM.clear();
 		for (Carta a : cartesArray) {
 			cartesDLM.addElement(a);
 		}
 		cartasList.setModel(cartesDLM);
 	}
+
 	private void showError(String string) {
 		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(null,string, "Advertencia",1);
+		JOptionPane.showMessageDialog(null, string, "Advertencia", 1);
 	}
 
 }

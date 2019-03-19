@@ -23,6 +23,9 @@ public class ControladorInterfaz {
 	public void setDeckCargado(boolean deckCargado) {
 		this.deckCargado = deckCargado;
 	}
+	public	void randomDeck() {
+		
+	}
 	
 	
 }
