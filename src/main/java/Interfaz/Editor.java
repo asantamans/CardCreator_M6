@@ -206,11 +206,8 @@ public class Editor {
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
 					if (deckDLM.size()>0 && controller.getDeckValue()<=20) {
 						if (JOptionPane.showConfirmDialog(null,"Has afegit cartes al deck, vols mantenirles?","Alerta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-							ArrayList<Carta> mantener = new ArrayList<Carta>();
-							for (int i = 0; i < deckDLM.size();++i) {
-								mantener.add(deckDLM.getElementAt(i));
-							}
-							controller.randomDeck(mantener);
+		
+							controller.randomDeck(deckArray);
 							actualizarValorDeck();
 						}else {
 							controller.randomDeck();
@@ -266,6 +263,8 @@ public class Editor {
 
 					if (point >= 0) {
 						Carta tmp = cartasList.getModel().getElementAt(point);
+						cartesArray.remove(tmp);
+						deckArray.add(tmp);
 						controller.setDeckValue(controller.getDeckValue() + tmp.getValue());
 						deckDLM.addElement(cartasList.getSelectedValue());
 						cartesDLM.remove(cartasList.getSelectedIndex());
@@ -284,6 +283,8 @@ public class Editor {
 					int point = deckList.getSelectedIndex();
 					if (point >= 0) {
 						Carta tmp = deckList.getModel().getElementAt(point);
+						deckArray.remove(tmp);
+						cartesArray.add(tmp);
 						controller.setDeckValue(controller.getDeckValue() - tmp.getValue());
 						cartesDLM.addElement(deckList.getSelectedValue());
 						deckDLM.remove(point);
