@@ -1,9 +1,8 @@
 package daoImpl;
 
-import java.util.ArrayList;
 import java.util.NoSuchElementException;
 
-import javax.swing.JOptionPane;
+import org.bson.Document;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,7 +16,6 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.util.JSON;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import Objectes.Baralla;
 import idao.IBaralla;
 
@@ -61,28 +59,27 @@ public class BarallaMongoImpl implements IBaralla {
 	public boolean guardarBaralla(Baralla b1) {
 		obrirConexió();
 		conectar();
-
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("name", b1.getDeckName());
 		DBCursor cursor = collection.find(searchQuery);
-		
-		
+		boolean transaccio = false;
 		if(cursor.size()==0) {
 			DBObject obj=null;
+			ObjectMapper mapper = new ObjectMapper();
 			try {
-				obj = (DBObject) JSON.parse(new ObjectMapper().writeValueAsString(b1));
-			} catch (JsonProcessingException e) {
+				obj = (DBObject) JSON.parse(mapper.writeValueAsString(b1));
+				
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			collection.insert(obj);
-			desconectar();
-			tancarConexió();
-			return true;
+			
+			transaccio= true;
 		}
 		
 		desconectar();
 		tancarConexió();
-		return false;
+		return transaccio;
 	}
 
 	public boolean actualitzarBaralla(Baralla b1) {
@@ -93,7 +90,7 @@ public class BarallaMongoImpl implements IBaralla {
 		searchQuery.put("name", b1.getDeckName());
 		DBCursor cursor = collection.find(searchQuery);
 
-		boolean saved = false;
+		boolean transaccio = false;
 		if (cursor.size() != 0) {
 			DBObject obj = null;
 			try {
@@ -102,14 +99,13 @@ public class BarallaMongoImpl implements IBaralla {
 				e.printStackTrace();
 			}
 			collection.insert(obj);
-			desconectar();
-			tancarConexió();
-			return true;
+		
+			transaccio = true;
 		}
 
 		desconectar();
 		tancarConexió();
-		return false;
+		return transaccio;
 	}
 
 	public Baralla getDeckFromName(String nom) {

@@ -23,7 +23,7 @@ public class CartaExistImpl implements ICarta {
 	private Class cExist;
 	private Database dbExist;
 	private final String driver = "org.exist.xmldb.DatabaseImpl";
-	private final String uri = "xmldb:exist://localhost:8080/exist/xmlrpc/db/";
+	private final String uri = "xmldb:exist://localhost:8844/exist/xmlrpc/db/";
 	private final String resourceName = "card_collection.xml";
 
 	private Collection collection;

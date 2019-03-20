@@ -35,14 +35,11 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="src/main/resources/exist.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/gson-2.8.2.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/mongo-java-driver-3.10.1.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/org-apache-xmlrpc.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/ws-commons-util-1.0.2.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/xmldb.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/java-json.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/com.fasterxml.jackson.databind.jar"/>
-	<classpathentry kind="lib" path="src/main/resources/com.fasterxml.jackson.core.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
