@@ -204,7 +204,30 @@ public class Editor {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
+					if (deckDLM.size()>0 && controller.getDeckValue()<=20) {
+						if (JOptionPane.showConfirmDialog(null,"Has afegit cartes al deck, vols mantenirles?","Alerta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							ArrayList<Carta> mantener = new ArrayList<Carta>();
+							for (int i = 0; i < deckDLM.size();++i) {
+								mantener.add(deckDLM.getElementAt(i));
+							}
+							controller.randomDeck(mantener);
+							actualizarValorDeck();
+						}else {
+							controller.randomDeck();
+							actualizarValorDeck();
+						}
+					}else if (controller.getDeckValue() > 20) {
+						if (JOptionPane.showConfirmDialog(null,"El valor de la baralla es superior a 20, vol eliminarla?","Alerta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							controller.randomDeck();
+							actualizarValorDeck();
+						}else {
+							showError("No s'ha generat cap baralla ja que supera la restricció de Valor 20");
+						}
+					}else {
+						
+					}
 					controller.randomDeck();
+					actualizarValorDeck();
 				}
 
 				else {
