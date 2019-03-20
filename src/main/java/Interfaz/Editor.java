@@ -205,11 +205,12 @@ public class Editor {
 				// TODO Auto-generated method stub
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
 					if (deckDLM.size() > 0 && controller.getDeckValue() <= 20) {
-						if (JOptionPane.showConfirmDialog(null, "Has afegit cartes al deck, vols mantenirles?",
-								"Alerta", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						int opcion = JOptionPane.showConfirmDialog(null, "Has afegit cartes al deck, vols mantenirles?",
+								"Alerta", JOptionPane.YES_NO_OPTION);
+						if (opcion == JOptionPane.YES_OPTION) {
 							controller.randomDeck(deckArray);
 							actualizarValorDeck();
-						} else {
+						} else if (opcion == JOptionPane.NO_OPTION){
 							controller.randomDeck();
 							actualizarValorDeck();
 						}
@@ -271,6 +272,8 @@ public class Editor {
 						deckDLM.addElement(cartasList.getSelectedValue());
 						cartesDLM.remove(cartasList.getSelectedIndex());
 						actualizarValorDeck();
+						Editor.cartasList.setModel(Editor.cartesDLM);
+						Editor.deckList.setModel(Editor.deckDLM);
 					}
 				}
 
@@ -291,6 +294,8 @@ public class Editor {
 						cartesDLM.addElement(deckList.getSelectedValue());
 						deckDLM.remove(point);
 						actualizarValorDeck();
+						Editor.cartasList.setModel(Editor.cartesDLM);
+						Editor.deckList.setModel(Editor.deckDLM);
 					}
 
 				} else {
@@ -329,6 +334,11 @@ public class Editor {
 
 	public static void actualizarValorDeck(int newValor) {
 		valueLabel.setText("Valor baralla:" + newValor);
+		if (controller.getDeckValue() > 20) {
+			valueLabel.setForeground(Color.red);
+		} else {
+			valueLabel.setForeground(Color.green);
+		}
 	}
 
 	private void cargarCardListInJList() {
