@@ -88,7 +88,7 @@ public class ControladorInterfaz {
 		ArrayList<Carta> deckRandomBuild = mantener;
 		ArrayList<Carta> listaCartasTMP = Editor.cartesArray;
 		ArrayList<Carta> posiblesCandidatos = new ArrayList<Carta>();
-		for (Carta a : deckRandomBuild) {
+		for (Carta a : mantener) {
 			setDeckValue(getDeckValue() + a.getValue());
 			System.out.println(a.toString());
 		}
