@@ -3,6 +3,8 @@ package Logica;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javax.swing.DefaultListModel;
+
 import Interfaz.Editor;
 import Objectes.Carta;
 import daoImpl.BarallaMongoImpl;
@@ -46,7 +48,7 @@ public class ControladorInterfaz {
 			posiblesCandidatos = new ArrayList<Carta>();
 			for (Carta a : listaCartasTMP) {
 				if (a.getValue() <= 20 - getDeckValue()) {
-					
+
 					posiblesCandidatos.add(a);
 				}
 			}
@@ -86,20 +88,29 @@ public class ControladorInterfaz {
 		ArrayList<Carta> deckRandomBuild = mantener;
 		ArrayList<Carta> listaCartasTMP = Editor.cartesArray;
 		ArrayList<Carta> posiblesCandidatos = new ArrayList<Carta>();
+		for (Carta a : deckRandomBuild) {
+			setDeckValue(getDeckValue() + a.getValue());
+			System.out.println(a.toString());
+		}
+		System.out.println(getDeckValue());
+		if (getDeckValue() >= 20) {
+			end = true;
+		}
 		while (!end) {
 			posiblesCandidatos = new ArrayList<Carta>();
 			for (Carta a : listaCartasTMP) {
 				if (a.getValue() <= 20 - getDeckValue()) {
-					System.out.println(a.toString());
 					posiblesCandidatos.add(a);
 				}
 			}
+
 			if (posiblesCandidatos.size() > 0) {
 				// Obtenemos una carta aleatoria de todos los posibles candidatos
 				Random rand = new Random();
 				Carta tmp = posiblesCandidatos.get(rand.nextInt(posiblesCandidatos.size()));
 				// Eliminamos la carta de las proximas posibles cartas
 				listaCartasTMP.remove(tmp);
+				System.out.println(tmp.toString());
 				deckRandomBuild.add(tmp);
 
 				// Actualizamos el deckValue del mazo
@@ -109,17 +120,29 @@ public class ControladorInterfaz {
 				end = true;
 			}
 		}
+		System.out.println("\n\n\n\n\\nCartas random");
+		for (Carta tmp : deckRandomBuild) {
+			System.out.println(tmp.toString());
+		}
+
 		Editor.cartesArray = listaCartasTMP;
 		Editor.deckArray = deckRandomBuild;
 		// Actualizamos los DefaultModelList
-		Editor.cartesDLM.clear();
-		Editor.deckDLM.clear();
+		for (int i = 0; i < Editor.cartesDLM.size(); ++i) {
+			Editor.cartesDLM.removeElementAt(i);
+		}
+		for (int i = 0; i < Editor.deckDLM.size(); ++i) {
+			Editor.deckDLM.removeElementAt(i);
+		}
+
 		for (Carta a : listaCartasTMP) {
 			Editor.cartesDLM.addElement(a);
 		}
 		for (Carta a : deckRandomBuild) {
 			Editor.deckDLM.addElement(a);
 		}
+		Editor.cartasList.setModel(Editor.cartesDLM);
+		Editor.deckList.setModel(Editor.deckDLM);
 
 	}
 

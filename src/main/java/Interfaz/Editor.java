@@ -223,7 +223,7 @@ public class Editor {
 					}else {
 						
 					}
-					controller.randomDeck();
+					
 					actualizarValorDeck();
 				}
 
