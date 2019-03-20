@@ -42,5 +42,7 @@
 	<classpathentry kind="lib" path="src/main/resources/ws-commons-util-1.0.2.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/xmldb.jar"/>
 	<classpathentry kind="lib" path="src/main/resources/java-json.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/com.fasterxml.jackson.databind.jar"/>
+	<classpathentry kind="lib" path="src/main/resources/com.fasterxml.jackson.core.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
