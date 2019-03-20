@@ -29,10 +29,14 @@ public class BarallaMongoImpl implements IBaralla {
 	private DB database;
 	private DBCollection collection;
 
+	public BarallaMongoImpl() {
+		//Empty
+		//Fem servir els metodes per obrir i tancar conexio tota l'estona
+	}
 	
 	//Metodes per conectar i desconectar BBDD Mongo
 	private void obrirConexió() {
-		connectionString = new MongoClientURI("mongodb://localhost:8080");
+		connectionString = new MongoClientURI("mongodb://localhost:27017");//Segun COMPASS
 		mongoClient = new MongoClient(connectionString);
 	}
 
@@ -129,5 +133,6 @@ public class BarallaMongoImpl implements IBaralla {
 		return searchDeck;
 
 	}
+	
 
 }

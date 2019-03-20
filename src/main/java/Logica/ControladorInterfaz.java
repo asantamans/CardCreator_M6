@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.swing.DefaultListModel;
 
 import Interfaz.Editor;
+import Objectes.Baralla;
 import Objectes.Carta;
 import daoImpl.BarallaMongoImpl;
 import daoImpl.CartaExistImpl;
@@ -163,6 +164,16 @@ public class ControladorInterfaz {
 
 	public void setDeckValue(int deckValue) {
 		this.deckValue = deckValue;
+	}
+	public void guardarDeck(ArrayList<Carta> llistaDeck, String nom) {
+		barallaMongoDB = new BarallaMongoImpl();
+		Baralla a = new Baralla(nom, getDeckValue(), llistaDeck);
+		if (barallaMongoDB.guardarBaralla(a)) {
+			Editor.showError("S'ha guardat la baralla satisfactoriament");
+			//Reutilitzem la funcio de editor, tot i que no sigui un error esplicitament
+		}else {
+			Editor.showError("La baralla ja existeix, cambieu el nom");
+		}
 	}
 
 }

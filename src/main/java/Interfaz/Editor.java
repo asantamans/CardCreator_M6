@@ -199,6 +199,18 @@ public class Editor {
 		panel.add(lblNewLabel);
 
 		// Action Listeners
+		btnGuardarBaralla.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				String nom = textField.getText();
+				if (!nom.equals("")) {
+					controller.guardarDeck(deckArray, nom);
+				}else {
+					showError("El camp nom no pot estar buit");
+				}
+				
+			}
+		});
 		btnRandomDeck.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent arg0) {
@@ -224,7 +236,7 @@ public class Editor {
 							showError("No s'ha generat cap baralla ja que supera la restricció de Valor 20");
 						}
 					} else {
-
+						controller.randomDeck();
 					}
 
 					actualizarValorDeck();
