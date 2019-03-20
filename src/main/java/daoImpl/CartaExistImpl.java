@@ -88,21 +88,6 @@ public class CartaExistImpl implements ICarta {
 		// TODO Auto-generated method stub
 		return llistaCartes;
 	}
-
-	public Carta getCartaFromId(int id) {
-		boolean encontrada = false;
-		Carta retorno = null;
-		for (Carta tmp : llistaCartes) {
-			if (tmp.getId() == id) {
-				encontrada = true;
-				return tmp;
-			}
-		}
-		// Es un chivato para saber lo que pasa por consola...
-		System.out.println("Carta con id " + id + " no encontrada");
-		return null;
-	}
-
 	
 	//Solo para pruebas
 	public static void main(String[] args) {
