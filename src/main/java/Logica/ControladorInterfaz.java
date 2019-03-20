@@ -94,56 +94,61 @@ public class ControladorInterfaz {
 		}
 		System.out.println(getDeckValue());
 		if (getDeckValue() >= 20) {
-			end = true;
-		}
-		while (!end) {
-			posiblesCandidatos = new ArrayList<Carta>();
-			for (Carta a : listaCartasTMP) {
-				if (a.getValue() <= 20 - getDeckValue()) {
-					posiblesCandidatos.add(a);
+			// No hacemos nada y fin de la funcion; se mantiene la seleccion normal
+			Editor.showError("No s'ha generat cap baralla Random ja que no pots afegir mes cartes;Valor Baralla = 20");
+		} else {
+
+			while (!end) {
+				if (posiblesCandidatos.size()>0) posiblesCandidatos.clear();
+				for (Carta a : listaCartasTMP) {
+					if (a.getValue() <= 20 - getDeckValue()) {
+						posiblesCandidatos.add(a);
+					}
+				}
+
+				if (posiblesCandidatos.size() > 0) {
+					// Obtenemos una carta aleatoria de todos los posibles candidatos
+					Random rand = new Random();
+					Carta tmp = posiblesCandidatos.get(rand.nextInt(posiblesCandidatos.size()));
+					// Eliminamos la carta de las proximas posibles cartas
+					listaCartasTMP.remove(tmp);
+					System.out.println(tmp.toString());
+					deckRandomBuild.add(tmp);
+
+					// Actualizamos el deckValue del mazo
+					setDeckValue(getDeckValue() + tmp.getValue());
+
+				} else {
+					end = true;
+				}
+				if (getDeckValue() >= 20) {
+					end = true;
 				}
 			}
-
-			if (posiblesCandidatos.size() > 0) {
-				// Obtenemos una carta aleatoria de todos los posibles candidatos
-				Random rand = new Random();
-				Carta tmp = posiblesCandidatos.get(rand.nextInt(posiblesCandidatos.size()));
-				// Eliminamos la carta de las proximas posibles cartas
-				listaCartasTMP.remove(tmp);
+			System.out.println("\n\n\n\n\\nCartas random");
+			for (Carta tmp : deckRandomBuild) {
 				System.out.println(tmp.toString());
-				deckRandomBuild.add(tmp);
-
-				// Actualizamos el deckValue del mazo
-				setDeckValue(getDeckValue() + tmp.getValue());
-
-			} else {
-				end = true;
 			}
-		}
-		System.out.println("\n\n\n\n\\nCartas random");
-		for (Carta tmp : deckRandomBuild) {
-			System.out.println(tmp.toString());
-		}
 
-		Editor.cartesArray = listaCartasTMP;
-		Editor.deckArray = deckRandomBuild;
-		// Actualizamos los DefaultModelList
-		for (int i = 0; i < Editor.cartesDLM.size(); ++i) {
-			Editor.cartesDLM.removeElementAt(i);
-		}
-		for (int i = 0; i < Editor.deckDLM.size(); ++i) {
-			Editor.deckDLM.removeElementAt(i);
-		}
+			Editor.cartesArray = listaCartasTMP;
+			Editor.deckArray = deckRandomBuild;
+			// Actualizamos los DefaultModelList
+			for (int i = 0; i < Editor.cartesDLM.size(); ++i) {
+				Editor.cartesDLM.removeElementAt(i);
+			}
+			for (int i = 0; i < Editor.deckDLM.size(); ++i) {
+				Editor.deckDLM.removeElementAt(i);
+			}
 
-		for (Carta a : listaCartasTMP) {
-			Editor.cartesDLM.addElement(a);
+			for (Carta a : Editor.cartesArray) {
+				Editor.cartesDLM.addElement(a);
+			}
+			for (Carta a : Editor.deckArray) {
+				Editor.deckDLM.addElement(a);
+			}
+			Editor.cartasList.setModel(Editor.cartesDLM);
+			Editor.deckList.setModel(Editor.deckDLM);
 		}
-		for (Carta a : deckRandomBuild) {
-			Editor.deckDLM.addElement(a);
-		}
-		Editor.cartasList.setModel(Editor.cartesDLM);
-		Editor.deckList.setModel(Editor.deckDLM);
-
 	}
 
 	public void cargarCardList() {

@@ -204,26 +204,28 @@ public class Editor {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				if (controller.isCartasCargadas() || controller.isDeckCargado()) {
-					if (deckDLM.size()>0 && controller.getDeckValue()<=20) {
-						if (JOptionPane.showConfirmDialog(null,"Has afegit cartes al deck, vols mantenirles?","Alerta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-		
+					if (deckDLM.size() > 0 && controller.getDeckValue() <= 20) {
+						if (JOptionPane.showConfirmDialog(null, "Has afegit cartes al deck, vols mantenirles?",
+								"Alerta", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 							controller.randomDeck(deckArray);
 							actualizarValorDeck();
-						}else {
+						} else {
 							controller.randomDeck();
 							actualizarValorDeck();
 						}
-					}else if (controller.getDeckValue() > 20) {
-						if (JOptionPane.showConfirmDialog(null,"El valor de la baralla es superior a 20, vol eliminarla?","Alerta",JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					} else if (controller.getDeckValue() > 20) {
+						if (JOptionPane.showConfirmDialog(null,
+								"El valor de la baralla es superior a 20, vol eliminarla?", "Alerta",
+								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 							controller.randomDeck();
 							actualizarValorDeck();
-						}else {
+						} else {
 							showError("No s'ha generat cap baralla ja que supera la restricció de Valor 20");
 						}
-					}else {
-						
+					} else {
+
 					}
-					
+
 					actualizarValorDeck();
 				}
 
@@ -310,9 +312,8 @@ public class Editor {
 		}
 	}
 
-	
-	/*Deprecated
-	 * private void cargarInvisibles() { cartasList.setVisible(true);
+	/*
+	 * Deprecated private void cargarInvisibles() { cartasList.setVisible(true);
 	 * deckList.setVisible(true); toDeck.setVisible(true);
 	 * toCartas.setVisible(true); textField.setVisible(true);
 	 * lblNomBaralla.setVisible(true); btnRandomDeck.setVisible(true); }
@@ -340,7 +341,7 @@ public class Editor {
 		cartasList.setModel(cartesDLM);
 	}
 
-	private void showError(String string) {
+	public static void showError(String string) {
 		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(null, string, "Advertencia", 1);
 	}
