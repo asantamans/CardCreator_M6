@@ -33,12 +33,12 @@ public class BarallaMongoImpl implements IBaralla {
 	}
 	
 	//Metodes per conectar i desconectar BBDD Mongo
-	private void obrirConexió() {
+	private void obrirConect() {
 		connectionString = new MongoClientURI("mongodb://localhost:27017");//Segun COMPASS
 		mongoClient = new MongoClient(connectionString);
 	}
 
-	private void tancarConexió() {
+	private void tancarConect() {
 		mongoClient.close();
 		connectionString = null;
 	}
@@ -57,7 +57,7 @@ public class BarallaMongoImpl implements IBaralla {
 	//Metodes IBaralla
 
 	public boolean guardarBaralla(Baralla b1) {
-		obrirConexió();
+		obrirConect();
 		conectar();
 		BasicDBObject searchQuery = new BasicDBObject();
 		searchQuery.put("name", b1.getDeckName());
@@ -78,12 +78,12 @@ public class BarallaMongoImpl implements IBaralla {
 		}
 		
 		desconectar();
-		tancarConexió();
+		tancarConect();
 		return transaccio;
 	}
 
 	public boolean actualitzarBaralla(Baralla b1) {
-		obrirConexió();
+		obrirConect();
 		conectar();
 
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -104,12 +104,12 @@ public class BarallaMongoImpl implements IBaralla {
 		}
 
 		desconectar();
-		tancarConexió();
+		tancarConect();
 		return transaccio;
 	}
 
 	public Baralla getDeckFromName(String nom) {
-		obrirConexió();
+		obrirConect();
 		conectar();
 
 		BasicDBObject searchQuery = new BasicDBObject();
@@ -125,7 +125,7 @@ public class BarallaMongoImpl implements IBaralla {
 		}
 
 		desconectar();
-		tancarConexió();
+		tancarConect();
 		return searchDeck;
 
 	}

@@ -17,7 +17,7 @@ import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-public class Aplicación {
+public class Aplicacio {
 
 	private JFrame frame;
 	private BufferedImage image;
@@ -28,7 +28,7 @@ public class Aplicación {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Aplicación window = new Aplicación();
+					Aplicacio window = new Aplicacio();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class Aplicación {
 	/**
 	 * Create the application.
 	 */
-	public Aplicación() {
+	public Aplicacio() {
 		initialize();
 	}
 
